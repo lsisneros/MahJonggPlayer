@@ -257,10 +257,10 @@
             var keys = [];
             var konami = '17,16,72';  // Ctrl,Shift,q
 
-            $(document).addEventListener("touchstart", touch2Mouse, true);
-           	$(document).addEventListener("touchmove", touch2Mouse, true);
-			$(document).addEventListener("touchend", touch2Mouse, true);
-			$(document).keydown(function (e) {
+  //          $(document).addEventListener("touchstart", touch2Mouse, true);
+  //         	$(document).addEventListener("touchmove", touch2Mouse, true);
+//			$(document).addEventListener("touchend", touch2Mouse, true);
+		$(document).keydown(function (e) {
                 keys.push(e.keyCode);
                 console.log(e.keyCode);
                 if (keys.toString().indexOf(konami) >= 0) {
