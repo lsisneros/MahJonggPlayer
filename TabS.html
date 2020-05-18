@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang = "en">
+   <head>
+      <meta charset = "utf-8">
+      <title>South</title>
+       
+      <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css
+         " rel = "stylesheet">  
+    <link rel="stylesheet" href="main.css">
+
+       
+       
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      <script src="scriptS.js"></script>
+	  <script src="charlestonS.js"></script>
+
+<body onload="getNextImageS()">
+    
+ <div class="header">
+  <h1>Mah Jongg Player</h1>
+    </div>
+<div id="South">
+
+ <div class="page">
+  <div class="halfpage" >
+      <h2>South</h2>   
+
+
+<div class="row" id="Images">
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgS1" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgS2" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgS3" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgS4" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgS5" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgS6" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgS7" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgS8" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgS9" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgS10" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgS11" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgS12" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgS13" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+<!---
+        </div>
+     
+            <div class="notes">
+                               
+         <label for="notes">Notes</label> 
+        <textarea id="notes" rows="4" cols="50">  </textarea>
+                </div>
+   <--->   
+    
+  </div>
+
+    
+    
+</div> 
+
+</div>
+    
+          <p>
+
+
+        <button hidden class="button" id="NewTileButton" onclick="getNewTileS()">Draw Tile</button>
+        <button hidden class="button" id="Discard" onclick="discardTileS()">Discard</button>   
+        <button hidden class="button" id="UnDo" onclick="undoTileS()">UnDo</button>
+        <button hidden class="button" id="Call" onclick="callTileS()">Call</button>
+        <button hidden class="button" id="Expose" onclick="exposeTileS()">Expose</button>
+        <button hidden class="button" id="Continue" onclick="continuePlay()">Continue</button>
+        <button hidden class="button" id="Exchange" onclick="exTile()">Exchange</button>
+		<button hidden class="button" id="MahJongg" 
+		onclick="mahJongg()">Mah Jongg</button>
+        <button hidden class="button" id="Notes Button" 
+        onclick="notes()">Notes</button>        
+                
+        <button class="button" id="ChPass" 
+        onclick="pass()">Pass</button>
+        <button class="button" id="Get" 
+        onclick="get()">Get</button>
+		<button class="button" id="Blind" 
+        onclick="blindPass()">Blind Pass</button>
+        <button class="button" id="Stop" 
+        onclick="stopCharleston()">Stop</button>
+              
+              
+        </p>
+    
+    
+             
+        <label for="player">Active player:  </label>
+        <textarea id="player">East</textarea>
+        
+<p>           
+        <div class="Notes">
+        <div hidden id="notes">                              
+            <label for="notes">Notes</label> 
+            <textarea id="notes" rows="4" cols="50">  </textarea>
+        </div>  
+        </div>  
+</p>    
+   
+
+
+    
+    <div class="row"> 
+    <div hidden class="drawtileBox" id="newtilebox">
+        <div class="drawtile" id="newtile">
+            <img id="imgS14" title="imgS14" src="Tiles/Blank.jpg" alt="Not Found" style="width:62px">
+        </div>
+        <p>Draw</p>
+    </div>
+
+
+    <div hidden class="discardtileBox" id="discardtilebox">
+        <div class="discardtile" id="discardtile">
+            <img id="imgDiscard" src="Tiles/Blank.jpg" alt="Not Found" style="width:62px">
+        </div>
+        <p>Discard</p>
+    </div>
+    </div>
+    
+    <div class="row">   
+       <div class="chOut" id = "chOut">
+    
+        <div class="chOut1"  id="chOut1">
+            <img id="imgchOut1" class="chOutTile" src="Tiles/Blank.jpg" alt="Not Found" style="width:62px">
+        
+           <p>Charleston Out</p>
+        </div>
+           
+        <div class="chOut2" id="chOut2">
+            <img id="imgchOut2" class="chOutTile" src="Tiles/Blank.jpg" alt="Not Found" style="width:62px">
+        </div>
+           
+         <div class="chOut3" id="chOut3">
+            <img id="imgchOut3" class="chOutTile" src="Tiles/Blank.jpg" alt="Not Found" style="width:62px">
+        </div>
+        
+    </div> 
+        
+        <div class="chIn" id = "chIn">
+    
+        <div class="chIn1"  id="chIn1">
+            <img id="imgchIn1" class="chInTile" src="Tiles/Blank.jpg" alt="Not Found" style="width:62px">
+        
+           <p>Charleston In</p>
+        </div>
+           
+        <div class="chIn2" id="chIn2">
+            <img id="imgchIn2" class="chInTile" src="Tiles/Blank.jpg" alt="Not Found" style="width:62px">
+        </div>
+           
+         <div class="chIn3" id="chIn3">
+            <img id="imgchIn3" class="chInTile" src="Tiles/Blank.jpg" alt="Not Found" style="width:62px">
+        </div>
+        
+    </div>
+    </div>
+    
+    <div hidden class="exSelect" id = "exSelect">
+       <p>Select exposed hand then double-click on your tile to be exchanged. </p>
+       <label for="exch">Choose Exposed Hand:</label>
+
+        <select id="hand">
+        <option value="East">East</option>
+        <option value="North">North</option>
+        <option value="West">West</option>
+        <option value="South">South</option>
+        </select>
+       
+       </div>
+
+
+
+<div class="halfpage" >
+        
+        <div hidden id = "southExpose">
+        <h3>South Exposed Hand</h3>
+           <div class="exrow" id="Images">
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS1" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS2" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS3" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS4" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS5" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+           <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS6" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS7" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+           <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS8" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS9" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+           <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS10" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS11" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+           <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS12" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS13" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+           <div class="column" ondragover="event.preventDefault()">
+                <img id="imgRS14" class="sortable" src="Tiles/Blank.jpg" droppable="true" alt="Not Found" style="width:62px">
+            </div>
+            
+ 
+
+  </div>
+</div>
+
+    
+        <script>
+			
+		window.onbeforeunload = function() {
+   			return "Do you really want to close?";
+		};
+
+        $("document").ready(function () {
+            var keys = [];
+            var konami = '17,16,72';  // Ctrl,Shift,q
+
+            $(document).keydown(function (e) {
+                keys.push(e.keyCode);
+                console.log(e.keyCode);
+                if (keys.toString().indexOf(konami) >= 0) {
+                    // Do yo thing, gurl
+                    hide();
+
+                    // empty the array containing the key sequence entered by the user
+                    keys = [];
+                } else {
+                    console.log('no match');
+                }
+            });
+            
+            $("#tabsCtrl").tabs({
+                beforeActivate: function (event, ui) {
+                newTab(ui.newPanel.attr('id'));
+                }
+            });
+            $(".sortable").droppable({
+                accept: ".drawtile",
+                drop: function (event, ui) {
+                    dropTile($(this).attr("id"));
+                }
+
+            });
+            $(".row").dblclick(function(event){
+                 moveExTile(event.target.id);
+            });
+            $(".row").sortable();
+            $(".row").disableSelection();
+            $(".drawtile").draggable({
+                snap: "#column",
+                revert: true
+
+            });
+        })
+
+    </script>
+    
+    </body>
+       
+ <div class="footer">
+ <br>
+          &copy;   MahJonggPlayer
+        </div>
+
+    
