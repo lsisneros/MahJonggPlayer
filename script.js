@@ -76,7 +76,6 @@ function shuffle() {
    // getNextImageE;
     
 
-
 }
 
 function getImage(t) {

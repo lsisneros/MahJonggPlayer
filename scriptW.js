@@ -1,11 +1,16 @@
 var discardImage;
 var discardTitle;
-var exSub = 0;
+var exNum = 1;
 var exchange = false;
 var passTo = ["South", "East", "North", "North", "East", "South", "East"];
 var getImg = new Array(3);
 var lastID;
 var call = false;
+var optPass = false;
+var discard = false;
+var exTitle = new Array(4);
+var exStart = new Array(4);
+var exSub = 0;
 
 function discardTileW(){
   
@@ -15,6 +20,8 @@ function discardTileW(){
 	document.getElementById("imgDiscard").title = y;
     document.getElementById("imgW14").src = "Tiles/Blank.jpg";
 	document.getElementById("imgW14").title = "Blank";
+	window.opener.showDiscard(x);
+	discard = true;
     turnEnd();
 
 }
@@ -29,24 +36,42 @@ function undoTileW(){
 	}
 	else {
 
-    var x = document.getElementById(lastID).src;
-    var y = document.getElementById("imgDiscard").src;
-	var t = document.getElementById(lastID).title
-	var u = document.getElementById("imgDiscard").title;
-    document.getElementById("imgW14").src = x;
-	document.getElementById("imgW14").title = t;	
-	document.getElementById(lastID).src = y;
-	document.getElementById(lastID).title = u;
+		undoA();
+	}
+}
+
+function undoA() {
+	
+	var x,y,y,u;
+	
+y = document.getElementById("imgDiscard").src;	
+	u = document.getElementById("imgDiscard").title;
+	if (discard) {
+		document.getElementById("imgW14").src = y;
+		document.getElementById("imgW14").title = u;	
+	} else {
+		x = document.getElementById(lastID).src;
+		t = document.getElementById(lastID).title;
+    	document.getElementById("imgW14").src = x;
+		document.getElementById("imgW14").title = t;	
+		document.getElementById(lastID).src = y;
+		document.getElementById(lastID).title = u;		
+	}
 	document.getElementById("imgDiscard").src = "Tiles/Blank.jpg";
 	document.getElementById("imgDiscard").title = "Blank";
-	}
+	window.opener.discardCount -= 1;
+	
 }
 
 function callTileW(){
     
 	call = true;
+	document.getElementById("Expose").removeAttribute("hidden");
     var x = document.getElementById("imgDiscard").src;
 	var y = document.getElementById("imgDiscard").title;
+	exTitle[exSub] = y;
+	exStart[exSub] = exNum;
+	exSub += 1;
     document.getElementById("imgW14").src = x;
 	document.getElementById("imgW14").title = y;
     document.getElementById("imgDiscard").src = "Tiles/Blank.jpg";
@@ -54,6 +79,7 @@ function callTileW(){
     window.opener.callBy("West"); 
     enableExpose();
 	setCallButtons();
+	window.opener.discardCount -= 1;
     window.opener.stopPlay();   
 
 }
@@ -64,26 +90,44 @@ function setCallButtons() {
 	disableCall();
 	disableDiscard();
 	disableExchange();
+	document.getElementById("Call").setAttribute("hidden", true);
+	document.getElementById("Continue").removeAttribute("hidden");
 	
 }
 
 function resetCallButtons() {
 	
-	enableDraw();
 	enableCall();
 	enableDiscard();
-	enableExchange()
+	enableExchange();
+	document.getElementById("Call").removeAttribute("hidden");
+	call = false;
 }
 
 function undoCall() {
 	
+	var x,y,y,u;
 	
+	if (document.getElementById("imgW14").title == "Blank") {
+		undoA();
+	}
+	
+	x = document.getElementById("imgW14").src;
+	t = document.getElementById("imgW14").title;
+	document.getElementById("imgDiscard").src = x;
+	document.getElementById("imgDiscard").title = t;
+	document.getElementById("imgW14").src = "Tiles/Blank.jpg";
+	document.getElementById("imgW14").title = "Blank";
+	window.opener.undoCall();
+			
 }
 
-function exposeTileW(){   
+function exposeTileW(){
+	
+	suspendDblClick = false;
     document.getElementById("westExpose").removeAttribute("hidden");
     window.opener.expose("w");
-    document.getElementById("Continue").removeAttribute("hidden");  
+   // document.getElementById("Continue").removeAttribute("hidden");  
 }
 
 
@@ -106,11 +150,12 @@ function getNextImageW() {
         //            alert(i + ": " + image);
         id = "imgW" + (i + 1);
         document.getElementById(id).src = image;
-        document.getElementById(id).title = hand[i];
+		tname = getTitle(hand[i]);
+        document.getElementById(id).title = tname;
         }
     disableDraw();
     enableCall();
-    setPlayer("Charleston1:  Right");
+    setPlayer("Charleston1:  Right - passing to " + passTo[0]);
     document.getElementById("ChPass").disabled= true;
     document.getElementById("Get").disabled= true;
  	document.getElementById("Blind").disabled= true;
@@ -119,7 +164,9 @@ function getNextImageW() {
 
 function getNewTileW() {
 
-    nxt =  window.opener.next;
+	var t;    
+	discard = false;
+	nxt =  window.opener.next;
     imArray = window.opener.imageName;
 //    console.log("In getNewTile: " + imArray);
     tname = imArray[nxt];
@@ -137,8 +184,26 @@ function getNewTileW() {
     //           
     document.getElementById("imgDiscard").src = "Tiles/Blank.jpg";
     disableDraw();
-	disableCall();
+	// disableCall();
 
+}
+
+function getTitle(t) {
+	
+	var title;
+		
+//	console.log("t:  " + t);
+	if (t.includes("Flower")) {
+		title = "Flower";
+		}else {	
+			if ((t == "Spring") || (t == "Summer") || (t == "Autumn") || (t == "Winter")) {
+				title  = "Flower";
+			}
+			 else {
+			title = t;
+			}
+		}
+	return title;
 }
 
 function dragTile(dragEvent, ui) {
@@ -154,10 +219,11 @@ function dragTile(dragEvent, ui) {
 function dropTile(id) {
 	
      console.log(id + " tile dropped");
-    dropID = id;
+    lastID = id;
 	
-    document.getElementById("imgDiscard").src = document.getElementById(id).src;
     var d = document.getElementById(id).src;
+	window.opener.showDiscard(d);
+	document.getElementById("imgDiscard").src = d;
     d = d.split("Tiles/");
     var n = d[1];
     var t = n.split(".");
@@ -169,7 +235,9 @@ function dropTile(id) {
     document.getElementById("imgW14").src = "Tiles/Blank.jpg";
     document.getElementById("imgW14").title = "Blank";
     // drawCount++;
-    turnEnd();
+    if (!call) {
+    	turnEnd();
+	}
 
     }
 
@@ -210,12 +278,12 @@ function disableExpose(){
 
 function enableExpose(){
     
-    document.getElementById("Expose").removeAttribute("hidden");
+    document.getElementById("Expose").disabled= false;
 }
 
 function enableExchange() {
     
-    document.getElementById("Exchange").removeAttribute("hidden");
+    document.getElementById("Exchange").disabled= false;
 }
 
 function disableExchange() {
@@ -225,6 +293,7 @@ function disableExchange() {
 
 function mahJongg() {
 	
+	exposeTileW();
 	window.opener.expose("w");
 	window.opener.mahJonggBy("West")
 	window.opener.stopPlay();
@@ -243,10 +312,32 @@ function callAlert(p){
 
 function pass() {
 	
+	var n;
+	var t = passTo[chSub];
+	if (optPass) {
+		n = document.getElementById("pass").value;
+//		alertCallOpt(t, n);
+		document.getElementById("passSelect").setAttribute("hidden", true);
+	}
+	else {
+		n = 3;
+	}
 	var p = window.opener.getWindowId("West");
 	var t = passTo[chSub];
-	passTiles(p, t);
+	passTiles(p, t, n);
 	
+}
+
+function alertCallOpt(t, n){
+	
+	var wid = window.opener.getWindowId(t);
+	wid.alertOpt("East", n);
+	
+}
+
+function alertOpt(f, n){
+	
+	alert(f + " selected " + n + " optional pass.  Your oprion must match.");
 }
 
 function get() {
@@ -261,8 +352,9 @@ function turnEnd(){
     discardTitle = document.getElementById("imgDiscard").title;  
     disableDraw();
     window.opener.turnEnd("w");
-    
-}
+	suspendDblClick = true;
+	
+	}
 
 function setDiscard(d, t){
     
@@ -277,10 +369,21 @@ function setPlayer(p){
 }
 
 function moveExTile(id){
+	
+	if (suspendDblClick) {
+		return; 
+		}
     
     if (charleston) {
-        setCharleston(id);
+		var t = document.getElementById(id).title;
+		if (t == "Joker"){
+			alert("Invalid pass!");
+		}
+		else {
+			setCharleston(id);
+		}
     }
+
     else if(exchange){      // After click onexchange button - 
                             // double-click on tile to be exchanged
         if(exMatch(id)){
@@ -293,8 +396,7 @@ function moveExTile(id){
         
         }
     else {
-        exSub += 1;
-        var exid = "imgRW" + exSub;  
+        var exid = "imgRW" + exNum;  
         var x = document.getElementById(id).src;
         var t = document.getElementById(id).title;
         document.getElementById(exid).src = x;
@@ -302,6 +404,7 @@ function moveExTile(id){
         window.opener.document.getElementById(exid).src = x;
         window.opener.document.getElementById(exid).title = t;
         document.getElementById(id).src = "Tiles/Blank.jpg";
+		exNum += 1;
     }
 }
 
@@ -313,7 +416,8 @@ function continuePlay(){
 
 function exTile(){  // Clicked on "exchange" button; show choice of exposed hands
     
-    exchange = true;
+ 	suspendDblClick = false;
+	exchange = true;
     document.getElementById("exSelect").removeAttribute("hidden");
    
 }
@@ -327,18 +431,28 @@ function exMatch(id){   // Get title of tile being exchanged
  //   window.opener.document.exTile("east", h, id);
     document.getElementById("exSelect").setAttribute("hidden", true);  // hide dropdown
     xid = window.opener.getWindowId(h); // window with exposed hand
-    
-    if(xid.findTitle(t)) {   // in window with exposed hand match title
-        
-        xid.swap(t);        // in window with exposed hand 
-        match = true;
-    }   
-    else {
-        
-        alert("No match for:  " + t);
-    }
-    
+    if (!xid.matchTitle(t)) {
+    	alert("No match for:  " + t);
+		}
+	else {
+		match = true
+	}
+
     return match;
+}
+
+function matchTitle(t) {
+	
+	var r = false;
+	for(i = 0; i < exSub; i++){
+        if (t == exTitle[i]){
+			swap(t, exStart[i]);   // in window with exposed hand 
+        	r = true;
+           	break;
+        }
+	}
+	return r;
+		
 }
 
 function notes(){
@@ -347,54 +461,24 @@ function notes(){
     
 }
 
-function findTitle(t){  // This window has exposed hand
-                        // search of match of titles
-    var f = false;
-    var i, s;
-    var img;
-    var exTitle;
-
+function swap(t, s){  // This window has exposed hand: 
     
-    for(i = 0; i < exSub; i++){
-        s = i + 1;
-        img = "imgRW" + s;
-        exTitle = document.getElementById(img).title;
-        if (t == exTitle){
-            f = true;
-            break;
-        }
-        
-        
-    }
-    
-    return f;
-}
-
-function swap(t){  // This window has exposed hand: 
-    
-    var i, s;
+    var i, k = s;
     var img;
     var j = 'Tiles/' + t + '.jpg';
     
-    for(i = 0; i < exSub; i++){
-        s = i + 1;
-        img = "imgRW" + s;
+    for(i = 0; i < 5; i++){
+        img = "imgRW" + k;
         exTitle = document.getElementById(img).title;
         if ("Joker" == exTitle){					
             document.getElementById(img).src= j;
 			window.opener.document.getElementById(img).src= j;
             document.getElementById(img).title = t;
-			window.opener.document.getElementById(img).title = t;
-            
+			window.opener.document.getElementById(img).title = t;           
             break;
-        }
-        
-        
+        }        
+         k += 1;
+		
     }
     
-}
-
-function close() {
-	
-	return;
 }

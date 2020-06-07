@@ -2,47 +2,65 @@ var eastID;
 var northID;
 var westID;
 var southID;
+var discardID;
 var discard;
 var dtitle;
+var discardCount = 0;
 var player = "Charleston1:  Right";
 var exArray = new Array(4);
 var exSub = 0;
+var tend;
 var chArray = ["1: Right", "2: Across", "3: 1st Left", "4: 2nd Left", "5: Across", "6: last Right", "7: Across"];
 
 
 function openEast(){
 
-eastID = window.open("TabE.html");
-document.getElementById("East").setAttribute("hidden", true);
+eastID = window.open("TabE.html", "_blank");
+//document.getElementById("East").setAttribute("hidden", true);
 
 }
 
 function openNorth(){
 
-northID = window.open("TabN.html");
-document.getElementById("North").setAttribute("hidden", true);
+northID = window.open("TabN.html", "_blank");
+//document.getElementById("North").setAttribute("hidden", true);
     
 }
 
 function openWest(){
 
-westID = window.open("TabW.html");
-document.getElementById("West").setAttribute("hidden", true);
+westID = window.open("TabW.html", "_blank");
+//document.getElementById("West").setAttribute("hidden", true);
     
 }
 
 function openSouth(){
 
-southID = window.open("TabS.html");
+southID = window.open("TabS.html", "_blank");
 document.getElementById("South").setAttribute("hidden", true);
     
 }
 
-function nextPlayer(){
+function openDiscards() {
+	
+	discardID = window.open("Discards.html", "_blank");
+	//document.getElementById("Discards").setAttribute("hidden", true);
 
 }
 
+function openAbout() {
+	
+// discardID.document.getElementById("imgCC11").className="discarded";	
+
+}
+
+function undoCall() {
+	turnEnd(tend);
+}
+
 function turnEnd(w){
+	
+	tend = w;
     switch (w) {
         case "e":
             player = "North";
@@ -181,22 +199,25 @@ function exchangeTile(id) {
     
 }
 
-function passTiles(f, h) {	// f - from; h - to
+function passTiles(f, h, n) {	// f - from; h - to
     
     var x;
+	var j;
+	var inID;
+	var outID;
     var xid = getWindowId(h);	// get window id from name
 	var hide = "Tiles/Hidden.jpg"
-        
-    x = f.document.getElementById("imgchOut1").src;
-	xid.getImg[0] = x;
-    xid.document.getElementById("imgchIn1").src = hide;        
-    x = f.document.getElementById("imgchOut2").src;
-	xid.getImg[1] = x;
-    xid.document.getElementById("imgchIn2").src = hide;
-    x = f.document.getElementById("imgchOut3").src;
-	xid.getImg[2] = x;
-    xid.document.getElementById("imgchIn3").src = hide;
     
+	for (i = 0; i < n; i++) {
+		j = i + 1;
+		inID = "imgchIn" + j;
+		outID = "imgchOut" + j;
+    	x = f.document.getElementById(outID).src;
+		xid.getImg[i] = x;
+    	xid.document.getElementById(inID).src = hide;            	
+		}
+	xid.passIn = true;
+	xid.checkPass();
 }
 
 function getWindowId(h){
@@ -233,14 +254,14 @@ function getWindowId(h){
 
 function test(){
     
-    pl = "Charleston" + chArray[2];
-    eastID.chSub = 2;
+    pl = "Charleston" + chArray[5];
+    eastID.chSub = 5;
     eastID.setPlayer(pl);
-    westID.chSub = 2;
+    westID.chSub = 5;
     westID.setPlayer(pl);
-    northID.chSub = 2;
+    northID.chSub = 5;
     northID.setPlayer(pl);
-    southID.chSub = 2;
+    southID.chSub = 5;
     southID.setPlayer(pl);
 }
 
@@ -251,6 +272,15 @@ function stopCharleston() {
     northID.endCharleston();
     southID.endCharleston();
     
+}
+
+function setOptional() {
+	
+    pl = "Charleston" + chArray[6];
+    eastID.setOptional(pl);
+    westID.setOptional(pl);
+    northID.setOptional(pl);
+    southID.setOptional(pl);
 }
 
 function exTile(f, t, id){
@@ -273,4 +303,30 @@ function close() {
 	}else{
     	return false;
 		}
+}
+
+function showDiscard(img) {
+	
+	discardCount += 1;
+	var i = "imgDC" + discardCount;
+	discardID.document.getElementById(i).src = img;	
+	discardID.document.getElementById(i).className="discarded";
+	
+}
+
+function start() {
+	eastID = window.open("TabE.html", "_blank");
+	northID = window.open("TabN.html", "_blank");
+	westID = window.open("TabW.html", "_blank");
+	southID = window.open("TabS.html", "_blank");
+	discardID = window.open("Discards.html", "_blank");
+}
+
+function openAll() {
+	
+	openEast();
+	openNorth();
+	openWest();
+	openSouth();
+	openDiscards();
 }

@@ -80,10 +80,10 @@
 
         <button hidden class="button" id="NewTileButton" onclick="getNewTileN()">Draw Tile</button>
         <button hidden class="button" id="Discard" onclick="discardTileN()">Discard</button>   
-        <button hidden class="button" id="UnDo" onclick="undoTileN()">UnDo</button>
+        <button class="button" id="UnDo" onclick="undoTileN()">UnDo</button>
         <button hidden class="button" id="Call" onclick="callTileN()">Call</button>
         <button hidden class="button" id="Expose" onclick="exposeTileN()">Expose</button>
-        <button hidden class="button" id="Continue" onclick="continuePlay()">Continue</button>
+		<button hidden class="button" id="Continue" onclick="continuePlay()">Continue</button>
         <button hidden class="button" id="Exchange" onclick="exTile()">Exchange</button>
 		<button hidden class="button" id="MahJongg" 
 		onclick="mahJongg()">Mah Jongg</button>
@@ -96,7 +96,7 @@
         onclick="get()">Get</button>
 		<button class="button" id="Blind" 
         onclick="blindPass()">Blind Pass</button>
-        <button class="button" id="Stop" 
+        <button hidden class="button" id="Stop" 
         onclick="stopCharleston()">Stop</button>                          
                             
         
@@ -184,7 +184,23 @@
         <option value="South">South</option>
         </select>
        
-       </div>                                                                                
+       </div> 
+	   
+
+	   
+	   <div hidden class="passSelect" id = "passSelect">
+       <p>Select optional number of tiles to be passed. </p>
+       <label for="opt">Optional Pass:</label>
+
+        <select id="pass">
+        <option value=0>0</option>
+        <option value=1>1</option>
+        <option value=2>2</option>      
+		<option value=3>3</option>
+        </select>
+       
+       </div>
+
     
     <div class="halfpage" >
         

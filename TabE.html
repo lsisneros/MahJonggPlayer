@@ -83,10 +83,10 @@
 
         <button hidden class="button" id="NewTileButton" onclick="getNewTileE()">Draw Tile</button>
         <button hidden class="button" id="Discard" onclick="discardTileE()">Discard</button>   
-        <button hidden class="button" id="UnDo" onclick="undoTileE()">UnDo</button>
+        <button class="button" id="UnDo" onclick="undoTileE()">UnDo</button>
         <button hidden class="button" id="Call" onclick="callTileE()">Call</button>
-        <button hidden class="button" id="Expose" onclick="exposeTileE()">Expose</button>
-        <button hidden class="button" id="Continue" onclick="continuePlay()">Continue</button>
+        <button hidden class="button" id="Expose" onclick="exposeTileE()">Expose</button>				
+     	<button hidden class="button" id="Continue" onclick="continuePlay()">Continue</button>
         <button hidden class="button" id="Exchange" 
 		onclick="exTile()">Exchange</button>
 		<button hidden class="button" id="MahJongg" 
@@ -100,7 +100,7 @@
         onclick="get()">Get</button>
 		<button class="button" id="Blind" 
         onclick="blindPass()">Blind Pass</button>
-        <button class="button" id="Stop" 
+        <button hidden class="button" id="Stop" 
         onclick="stopCharleston()">Stop</button>
 		
 		
@@ -193,6 +193,19 @@
         </select>
        
        </div>
+	   
+	   <div hidden class="passSelect" id = "passSelect">
+       <p>Select optional number of tiles to be passed. </p>
+       <label for="opt">Optiona Pass:</label>
+
+        <select id="pass">
+        <option value=0>0</option>
+        <option value=1>1</option>
+        <option value=2>2</option>      
+		<option value=3>3</option>
+        </select>
+       
+       </div>
 
     
     <div class="halfpage" >
@@ -257,10 +270,11 @@
             var keys = [];
             var konami = '17,16,72';  // Ctrl,Shift,q
 
-  //          $(document).addEventListener("touchstart", touch2Mouse, true);
-  //         	$(document).addEventListener("touchmove", touch2Mouse, true);
+//            $(document).addEventListener("touchstart", touch2Mouse, true);
+//           	$(document).addEventListener("touchmove", touch2Mouse, true);
 //			$(document).addEventListener("touchend", touch2Mouse, true);
-		$(document).keydown(function (e) {
+
+			$(document).keydown(function (e) {
                 keys.push(e.keyCode);
                 console.log(e.keyCode);
                 if (keys.toString().indexOf(konami) >= 0) {

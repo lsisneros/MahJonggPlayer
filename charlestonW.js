@@ -5,16 +5,33 @@ var pTile = new Array(3);
 var blind = false;
 var dblClick = 0;
 var toSub = 0;
-
+var suspendDblClick = false;
+var passOut = false;
+var passIn = false;
 
 function setCharleston(id) {  // pTile is array of passed tiles; dbl click on row
 
     var j;
+		if (optPass) {
+		var p;
+		var tp;
+		p = document.getElementById("pass").value;
+		var tid = window.opener.getWindowId("East");
+		tp = tid.document.getElementById("pass").value;
+		if ((p == tp) | (p == 0)) {
+			document.getElementById("ChPass").disabled= false;	
+			}
+		else {
+			alert("Tiles to be passed must match East");
+			return;
+		}
+	}
 	pTile[dblClick] = id;	//save id of passed tile
 	console.log(dblClick + "  " + id);
 	var b = "Tiles/Blank.jpg";
 	dblClick += 1;			// number of tiles passed from own hand
 	var x = document.getElementById(id).src;
+	var t = document.getElementById(id).title;
 	
 	for (i = 0; i < 3; i++) {  // find empty position
 		j = i +1;
@@ -22,7 +39,9 @@ function setCharleston(id) {  // pTile is array of passed tiles; dbl click on ro
 		var y = document.getElementById(chId).src;
 		if (y.includes(b)) {
 			document.getElementById(chId).src = x;
+			document.getElementById(chId).title = t;
     		document.getElementById(id).src = b;
+			document.getElementById(id).title = "Blank";
 			toSub += 1;			// number of tiles being passed
 			break;
 		}
@@ -31,19 +50,21 @@ function setCharleston(id) {  // pTile is array of passed tiles; dbl click on ro
     if (toSub == 3){
  //     chSub += 1;
 		toSub = 0;
+		suspendDblClick = true;
         document.getElementById("ChPass").disabled= false;
 //        pl = pl + window.opener.chArray[chSub];
 //        setPlayer(pl);
-		} 
-	
-    
+		}
+
+	    
 }
 
-function passTiles(pID, t) {
+function passTiles(pID, t, n) {
     
-    window.opener.passTiles(pID, t);
+    window.opener.passTiles(pID, t, n);
  //   chSub += 1;
-    document.getElementById("Get").disabled= false;
+	passOut = true;
+	checkPass();
     document.getElementById("ChPass").disabled= true;
  //   alert("Get enabled");
     
@@ -57,6 +78,13 @@ function passTiles(pID, t) {
         document.getElementById("imgchOut3").src = "Tiles/Blank.jpg";
 		
     
+}
+
+function checkPass() {
+	
+	if (passIn && passOut) {
+    	document.getElementById("Get").disabled= false;
+		}
 }
 
 function getTiles() {
@@ -83,11 +111,19 @@ function getTiles() {
         document.getElementById(t).src = x;
 		document.getElementById(t).title = title;
         document.getElementById(id).src = "Tiles/Blank.jpg";
+		document.getElementById(id).title = "Blank";
     }
+	passOut = false;
+	passIn = false;
 	dblClick = 0;
+	toSub = 0;
+	suspendDblClick = false;
     document.getElementById("Get").disabled= true;
 
-    chSub += 1;
+    chSub += 1;	
+	if (chSub == 3) {
+			document.getElementById("Stop").removeAttribute("hidden");	
+		}
 	if ((chSub == 2) || (chSub == 5)){	// chSub - where are we in Charleston
 		document.getElementById("Blind").disabled= false;
 		
@@ -100,12 +136,18 @@ function getTiles() {
         endCharleston();
 		endCh = true;
     } else {
-        pl = pl + window.opener.chArray[chSub];
+        pl = pl + window.opener.chArray[chSub] + " - passing to " + passTo[chSub];
         setPlayer(pl);
-		if (chSub == 6) {
-			document.getElementById("ChPass").disabled= false;
+		if (chSub > 3) {
+			document.getElementById("Stop").setAttribute("hidden", true);
+			
 		}
     }
+	if (chSub == 6) {
+		document.getElementById("ChPass").disabled= false;
+		document.getElementById("passSelect").removeAttribute("hidden");
+		optPass = true;
+	}	
 	
 	return endCh;
 //    document.getElementById("ChPass").disabled= false;
@@ -201,7 +243,8 @@ function endCharleston() {
     document.getElementById("Get").setAttribute("hidden", true);
 	document.getElementById("Blind").setAttribute("hidden", true);
     document.getElementById("ChPass").setAttribute("hidden", true);
-    document.getElementById("Stop").setAttribute("hidden", true);
+	document.getElementById("passSelect").setAttribute("hidden", true);
+	suspendDblClick = true;
 
     document.getElementById("NewTileButton").removeAttribute("hidden");
     document.getElementById("Discard").removeAttribute("hidden");
@@ -218,9 +261,33 @@ function endCharleston() {
 
 function stopCharleston() {
     
-    window.opener.stopCharleston();
+    window.opener.setOptional();
 }
 
+function setOptional(pl) {
+	
+	chSub = 6;
+	setPlayer(pl);
+	document.getElementById("passSelect").removeAttribute("hidden");
+	optPass = true;
+	document.getElementById("Stop").setAttribute("hidden", true);
+//	document.getElementById("ChPass").disabled= false;
+}
+
+
 function undoCharleston(){
+	
+		var x, t, y, z;
+		
+	y = "chOut" + dblClick;
+	z = "img" + y;
+	dblClick -= 1;
+	x = document.getElementById(z).src;
+	t = document.getElementById(z).title;
+	document.getElementById(pTile[dblClick]).src = x;
+	document.getElementById(pTile[dblClick]).title = t;	
+	document.getElementById(z).src = "Tiles/Blank.jpg";
+	document.getElementById(z).title = "Blank";
+	suspendDblClick = false;
 	
 }
