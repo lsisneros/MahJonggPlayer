@@ -291,6 +291,7 @@ function undoCharleston(){
 	y = "chOut" + dblClick;
 	z = "img" + y;
 	dblClick -= 1;
+	toSub -= 1;
 	x = document.getElementById(z).src;
 	t = document.getElementById(z).title;
 	document.getElementById(pTile[dblClick]).src = x;

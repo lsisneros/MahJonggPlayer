@@ -3,6 +3,7 @@ var northID;
 var westID;
 var southID;
 var discardID;
+var aboutID;
 var discard;
 var dtitle;
 var discardCount = 0;
@@ -16,21 +17,24 @@ var chArray = ["1: Right", "2: Across", "3: 1st Left", "4: 2nd Left", "5: Across
 function openEast(){
 
 eastID = window.open("TabE.html", "_blank");
-//document.getElementById("East").setAttribute("hidden", true);
-
+document.getElementById("East").setAttribute("hidden", true);
+document.getElementById("Start").setAttribute("hidden", true);
+	
 }
 
 function openNorth(){
 
 northID = window.open("TabN.html", "_blank");
-//document.getElementById("North").setAttribute("hidden", true);
+document.getElementById("North").setAttribute("hidden", true);
+document.getElementById("Start").setAttribute("hidden", true);
     
 }
 
 function openWest(){
 
 westID = window.open("TabW.html", "_blank");
-//document.getElementById("West").setAttribute("hidden", true);
+document.getElementById("West").setAttribute("hidden", true);
+document.getElementById("Start").setAttribute("hidden", true);
     
 }
 
@@ -38,19 +42,21 @@ function openSouth(){
 
 southID = window.open("TabS.html", "_blank");
 document.getElementById("South").setAttribute("hidden", true);
+document.getElementById("Start").setAttribute("hidden", true);
     
 }
 
 function openDiscards() {
 	
-	discardID = window.open("Discards.html", "_blank");
-	//document.getElementById("Discards").setAttribute("hidden", true);
+discardID = window.open("Discards.html", "_blank");
+document.getElementById("Discards").setAttribute("hidden", true);
+document.getElementById("Start").setAttribute("hidden", true);
 
 }
 
 function openAbout() {
 	
-// discardID.document.getElementById("imgCC11").className="discarded";	
+aboutID = window.open("about.html", "_blank");
 
 }
 
@@ -320,13 +326,17 @@ function start() {
 	westID = window.open("TabW.html", "_blank");
 	southID = window.open("TabS.html", "_blank");
 	discardID = window.open("Discards.html", "_blank");
+	hideAll();
+	
 }
 
-function openAll() {
+function hideAll() {
 	
-	openEast();
-	openNorth();
-	openWest();
-	openSouth();
-	openDiscards();
+document.getElementById("East").setAttribute("hidden", true);
+document.getElementById("North").setAttribute("hidden", true);
+document.getElementById("West").setAttribute("hidden", true);
+document.getElementById("South").setAttribute("hidden", true);
+document.getElementById("Discards").setAttribute("hidden", true);
+document.getElementById("Start").setAttribute("hidden", true);
 }
+
