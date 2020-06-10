@@ -6,11 +6,13 @@ var passTo = ["South", "East", "North", "North", "East", "South", "East"];
 var getImg = new Array(3);
 var lastID;
 var call = false;
+var callTitle;
 var optPass = false;
 var discard = false;
 var exTitle = new Array(4);
 var exStart = new Array(4);
 var exSub = 0;
+var indMahJongg = false;
 
 function discardTileW(){
   
@@ -23,6 +25,7 @@ function discardTileW(){
 	window.opener.showDiscard(x);
 	discard = true;
     turnEnd();
+	disableDiscard();
 
 }
 
@@ -69,6 +72,7 @@ function callTileW(){
 	document.getElementById("Expose").removeAttribute("hidden");
     var x = document.getElementById("imgDiscard").src;
 	var y = document.getElementById("imgDiscard").title;
+	callTitle = y;
 	exTitle[exSub] = y;
 	exStart[exSub] = exNum;
 	exSub += 1;
@@ -98,7 +102,7 @@ function setCallButtons() {
 function resetCallButtons() {
 	
 	enableCall();
-	enableDiscard();
+//	enableDiscard();
 	enableExchange();
 	document.getElementById("Call").removeAttribute("hidden");
 	call = false;
@@ -184,7 +188,7 @@ function getNewTileW() {
     //           
     document.getElementById("imgDiscard").src = "Tiles/Blank.jpg";
     disableDraw();
-	// disableCall();
+	enableDiscard();
 
 }
 
@@ -293,6 +297,7 @@ function disableExchange() {
 
 function mahJongg() {
 	
+	indMahJongg = true;
 	exposeTileW();
 	window.opener.expose("w");
 	window.opener.mahJonggBy("West")
@@ -399,13 +404,18 @@ function moveExTile(id){
         var exid = "imgRW" + exNum;  
         var x = document.getElementById(id).src;
         var t = document.getElementById(id).title;
-        document.getElementById(exid).src = x;
-        document.getElementById(exid).title = t;
-        window.opener.document.getElementById(exid).src = x;
-        window.opener.document.getElementById(exid).title = t;
-        document.getElementById(id).src = "Tiles/Blank.jpg";
-		exNum += 1;
-    }
+		if (((t == callTitle) || (t == "Joker")) || (indMahJongg)){		
+        	document.getElementById(exid).src = x;
+        	document.getElementById(exid).title = t;
+        	window.opener.document.getElementById(exid).src = x;
+        	window.opener.document.getElementById(exid).title = t;
+        	document.getElementById(id).src = "Tiles/Blank.jpg";
+			exNum += 1;		
+			}
+		else {
+			alert("Exposed tile must match call.");				
+			}
+	}
 }
 
 function continuePlay(){

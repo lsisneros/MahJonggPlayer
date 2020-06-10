@@ -8,11 +8,13 @@ var getImg = new Array(3);
 var lastID;
 var discardFirst = true;
 var call = false;
+var callTitle;
 var optPass = false;
 var discard = false;
 var exTitle = new Array(4);
 var exStart = new Array(4);
 var exSub = 0;
+var indMahJongg = false;
 
 function discardTileE() {
 	
@@ -26,6 +28,7 @@ function discardTileE() {
 	window.opener.showDiscard(x);
 	discard = true;
     turnEnd();
+	disableDiscard();
 
 }
 
@@ -72,6 +75,7 @@ function callTileE() {
 	document.getElementById("Expose").removeAttribute("hidden");
     var x = document.getElementById("imgDiscard").src;
 	var y = document.getElementById("imgDiscard").title;
+	callTitle = y;
 	exTitle[exSub] = y;
 	exStart[exSub] = exNum;
 	exSub += 1;
@@ -101,7 +105,7 @@ function setCallButtons() {
 function resetCallButtons() {
 	
 	enableCall();
-	enableDiscard();
+//	enableDiscard();
 	enableExchange();
 	document.getElementById("Call").removeAttribute("hidden");
 	call = false;
@@ -188,7 +192,7 @@ function getNewTileE() {
     //           
     document.getElementById("imgDiscard").src = "Tiles/Blank.jpg";
     disableDraw();
-	// disableCall();
+	enableDiscard();
 
 }
 
@@ -299,6 +303,7 @@ function disableExchange() {
 
 function mahJongg() {
 	
+	indMahJongg = true;
 	exposeTileE();
 	window.opener.expose("e");
 	window.opener.mahJonggBy("East")
@@ -411,13 +416,18 @@ function moveExTile(id) {
         	var exid = "imgRE" + exNum;  
         	var x = document.getElementById(id).src;
         	var t = document.getElementById(id).title;			
-        	document.getElementById(exid).src = x;
-        	document.getElementById(exid).title = t;
-        	window.opener.document.getElementById(exid).src = x;
-        	window.opener.document.getElementById(exid).title = t;
-        	document.getElementById(id).src = "Tiles/Blank.jpg";		
-			exNum += 1;	
-			}	
+        	if (((t == callTitle) || (t == "Joker")) || (indMahJongg)){
+        		document.getElementById(exid).src = x;
+        		document.getElementById(exid).title = t;
+        		window.opener.document.getElementById(exid).src = x;
+        		window.opener.document.getElementById(exid).title = t;
+        		document.getElementById(id).src = "Tiles/Blank.jpg";
+				exNum += 1;		
+				}
+			else {
+				alert("Exposed tile must match call.");				
+				}
+		}
 }
 
 function continuePlay(){
@@ -481,7 +491,7 @@ function firstDiscard(id) {
     document.getElementById(id).src = "Tiles/Blank.jpg";
     document.getElementById(id).setAttribute("hidden", true);
     discardFirst = false;
-    document.getElementById("Discard").disabled= false;
+  //  document.getElementById("Discard").disabled= false;
     document.getElementById("UnDo").disabled= false;
     document.getElementById("Call").disabled= false
     document.getElementById("Exchange").disabled= false;

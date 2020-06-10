@@ -246,6 +246,7 @@ function endCharleston() {
 
     document.getElementById("NewTileButton").removeAttribute("hidden");
     document.getElementById("Discard").removeAttribute("hidden");
+	document.getElementById("Discard").disabled= true;
     document.getElementById("UnDo").removeAttribute("hidden");
     document.getElementById("Call").removeAttribute("hidden");
 	document.getElementById("MahJongg").removeAttribute("hidden");
@@ -264,6 +265,10 @@ function stopCharleston() {
 
 function setOptional(pl) {
 	
+	if (dblClick > 0) {
+		alert("undo Pass");
+		return;
+	}
 	chSub = 6;
 	setPlayer(pl);
 	document.getElementById("passSelect").removeAttribute("hidden");

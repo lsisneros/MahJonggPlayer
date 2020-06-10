@@ -276,6 +276,10 @@ function stopCharleston() {
 
 function setOptional(pl) {
 	
+	if (dblClick > 0) {
+		alert("undo Pass");
+		return;
+	}
 	chSub = 6;
 	setPlayer(pl);
 	document.getElementById("passSelect").removeAttribute("hidden");
