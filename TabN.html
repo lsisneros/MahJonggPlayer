@@ -301,6 +301,15 @@
                 revert: true
 
             });
+			
+			$(".my-draggables")
+        		.draggableTouch()
+        		.bind("dragstart", function(event, pos) {
+            	console.log("drag started on:", this, "at position:", pos);
+        		})
+        		.bind("dragend", function(event, pos) {
+            	console.log("drag ended on:", this, "at position:", pos);
+        	});
         })
 
     </script>
