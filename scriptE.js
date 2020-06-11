@@ -364,6 +364,7 @@ function turnEnd(){
     disableDraw();
     window.opener.turnEnd("e");
 	suspendDblClick = true;
+	disableDiscard();
     
 }
 
