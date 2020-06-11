@@ -107,6 +107,12 @@ div.exSelect {
  left: 200px;    
 }
 
+div.passSelect {
+ position: absolute;
+ top: 500px;
+ left: 200px;    
+}
+
 div.chOut1 {
   position: absolute;
   top: 400px;
