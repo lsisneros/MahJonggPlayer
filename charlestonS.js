@@ -275,7 +275,7 @@ function setOptional(pl) {
 	document.getElementById("passSelect").removeAttribute("hidden");
 	optPass = true;
 	document.getElementById("Stop").setAttribute("hidden", true);
-//	document.getElementById("ChPass").disabled= false;
+	document.getElementById("ChPass").disabled= false;
 }
 
 
