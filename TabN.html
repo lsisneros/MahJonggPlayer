@@ -16,8 +16,16 @@
 	  <script src="touch.js"></script>
       <script src="scriptN.js"></script>
 	  <script src="charlestonN.js"></script>
+<!---
 	  <script src="jquery.draggableTouch.js"></script>
+--->
+	   
+	</head>
+	
+	<style>
+		body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 
+	</style>
 <body onload="getNextImageN()">
     
  <div class="header">
@@ -302,14 +310,8 @@
 
             });
 			
-			$(".my-draggables")
-        		.draggableTouch()
-        		.bind("dragstart", function(event, pos) {
-            	console.log("drag started on:", this, "at position:", pos);
-        		})
-        		.bind("dragend", function(event, pos) {
-            	console.log("drag ended on:", this, "at position:", pos);
-        	});
+
+
         })
 
     </script>

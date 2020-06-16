@@ -160,6 +160,7 @@ function getNextImageN() {
     disableDraw();
     enableCall();
     setPlayer("Charleston1:  Right - passing to " + passTo[0]);
+	document.getElementById("UnDo").disabled= true;
     document.getElementById("ChPass").disabled= true;
     document.getElementById("Get").disabled= true;
 	document.getElementById("Blind").disabled= true;

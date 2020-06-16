@@ -160,6 +160,7 @@ function getNextImageS() {
     disableDraw();
     enableCall();
     setPlayer("Charleston1:  Right - passing to " + passTo[0]);
+	document.getElementById("UnDo").disabled= true;
     document.getElementById("ChPass").disabled= true;
     document.getElementById("Get").disabled= true;
 	document.getElementById("Blind").disabled= true;
@@ -183,7 +184,8 @@ function getNewTileS() {
     //            var setID = "img" + newID; 
     //            console.log(227 + " " + setID);
     document.getElementById("imgS14").src = image;
-    document.getElementById("imgS14").title = tname;
+    t = getTitle(tname);
+    document.getElementById("imgS14").title = t;
     //            document.getElementById("img14").title = tname;
     //           
     document.getElementById("imgDiscard").src = "Tiles/Blank.jpg";

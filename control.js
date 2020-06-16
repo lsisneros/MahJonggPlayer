@@ -340,3 +340,6 @@ document.getElementById("Discards").setAttribute("hidden", true);
 document.getElementById("Start").setAttribute("hidden", true);
 }
 
+function openMain(){
+	window.open("Main.html", "_blank");
+}

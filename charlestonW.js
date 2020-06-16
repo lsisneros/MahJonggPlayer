@@ -12,7 +12,8 @@ var passIn = false;
 function setCharleston(id) {  // pTile is array of passed tiles; dbl click on row
 
     var j;
-		if (optPass) {
+	document.getElementById("UnDo").disabled= false;
+	if (optPass) {
 		var p;
 		var tp;
 		p = document.getElementById("pass").value;
