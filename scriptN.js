@@ -1,6 +1,6 @@
 var discardImage;
 var discardTitle;
-var exNum = 1;
+var exNum = 1;  //number of expose image (1 to 14)
 var exchange = false;
 var passTo = ["West", "South", "East", "East", "South", "West", "South"];
 var getImg = new Array(3);
@@ -9,9 +9,9 @@ var call = false;
 var callTitle;
 var optPass = false;
 var discard = false;
-var exTitle = new Array(4);
-var exStart = new Array(4);
-var exSub = 0;
+var exTitle = new Array(4);  //array of exposed titles
+var exStart = new Array(4);  // array of expose starting positions
+var exSub = 0;				 // number of exposed titles
 var indMahJongg = false;
 
 function discardTileN(){
@@ -485,8 +485,8 @@ function swap(t, s){  // This window has exposed hand:
     
     for(i = 0; i < 5; i++){
         img = "imgRN" + k;
-        exTitle = document.getElementById(img).title;
-        if ("Joker" == exTitle){
+        titleEx = document.getElementById(img).title;
+        if ("Joker" == titleEx){
             document.getElementById(img).src= j;
 			window.opener.document.getElementById(img).src= j;
             document.getElementById(img).title = t;

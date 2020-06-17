@@ -484,8 +484,8 @@ function swap(t, s){  // This window has exposed hand:
     
     for(i = 0; i < 5; i++){
         img = "imgRS" + k;
-        exTitle = document.getElementById(img).title;
-        if ("Joker" == exTitle){
+        titleEx = document.getElementById(img).title;
+        if ("Joker" == titleEx){
             document.getElementById(img).src= j;
 			window.opener.document.getElementById(img).src= j;
             document.getElementById(img).title = t;
