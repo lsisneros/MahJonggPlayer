@@ -98,7 +98,7 @@ function getTiles() {
 	var t;
 	var slash;
 	var dot;
-	var title;
+	var title, tx;
 	var endCh = false;
     
     for(i = 0; i < dblClick; i++) {  // replace moved tiles
@@ -107,7 +107,8 @@ function getTiles() {
         x = getImg[i];
 		slash = x.lastIndexOf("/") + 1;
 		dot = x.indexOf(".jpg");
-		title = x.substring(slash, dot);
+		tx = x.substring(slash, dot);
+		title = getTitle(tx);
 		t = pTile[i];
         document.getElementById(t).src = x;
 		document.getElementById(t).title = title;
@@ -151,6 +152,24 @@ function getTiles() {
 	}	
 	return endCh;
 //    document.getElementById("ChPass").disabled= false;
+}
+
+function getTitle(t) {
+	
+	var title;
+		
+//	console.log("t:  " + t);
+	if (t.includes("Flower")) {
+		title = "Flower";
+		}else {	
+			if ((t == "Spring") || (t == "Summer") || (t == "Autumn") || (t == "Winter")) {
+				title  = "Flower";
+			}
+			 else {
+			title = t;
+			}
+		}
+	return title;
 }
 
 function blindPass(){
