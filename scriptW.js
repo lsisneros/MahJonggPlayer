@@ -9,8 +9,11 @@ var call = false;
 var callTitle;
 var optPass = false;
 var discard = false;
-var exTitle = new Array(4);
-var exStart = new Array(4);
+var exTitle = new Array(5);
+var exStart = new Array(5);
+var exWind = new Array(4);
+var winds = ["North", "East", "South", "West"];
+var exWindStart = 0;
 var exSub = 0;
 var indMahJongg = false;
 
@@ -403,11 +406,11 @@ function moveExTile(id){
             exchange = false;
         
         }
-    else {
+    else {					// Expose
         var exid = "imgRW" + exNum;  
         var x = document.getElementById(id).src;
         var t = document.getElementById(id).title;
-		if (((t == callTitle) || (t == "Joker")) || (indMahJongg)){		
+		if (checkTitle(t)){		
         	document.getElementById(exid).src = x;
         	document.getElementById(exid).title = t;
         	window.opener.document.getElementById(exid).src = x;
@@ -421,7 +424,34 @@ function moveExTile(id){
 	}
 }
 
+function checkTitle(t) {
+	
+	var check = false;
+	if (((t == callTitle) || (t == "Joker")) || (indMahJongg)){
+		check = true;
+	} else {
+		if (winds.includes(callTitle) && winds.includes(t)) {
+			check = true;
+			exWindStart = exNum - 1;
+		}
+	}
+	
+	return check;
+	
+}
+
+
 function continuePlay(){
+	
+	var xw = exWindStart;
+	var wid;
+	if (exWindStart != 0) {
+		for ( i = 0; i < 4; i++) {
+			wid = "imgRW" + xw;
+			exWind[i] = document.getElementById(wid).title;
+			xw += 1;
+		}
+	}
     turnEnd();
     document.getElementById("Continue").setAttribute("hidden", true);
     
@@ -462,7 +492,12 @@ function matchTitle(t) {
 			swap(t, exStart[i]);   // in window with exposed hand 
         	r = true;
            	break;
-        }
+         } else {
+			if ((winds.includes(t)) && (!(exWind.includes(t))))
+				swap(t, exStart[i]);   // in window with exposed hand 
+        		r = true;
+           		break;
+		}
 	}
 	return r;
 		
