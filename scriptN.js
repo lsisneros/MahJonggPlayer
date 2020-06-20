@@ -13,7 +13,7 @@ var exTitle = new Array(5);  //array of exposed titles
 var exStart = new Array(5);  // array of expose starting positions
 var exWind = new Array(4);
 var winds = ["North", "East", "South", "West"];
-var exWindStart;
+var exWindStart = 0;
 var exSub = 0;				// number of exposed titles
 var exTNum = new Array(5);	// number of tiles in each exposed group
 var indMahJongg = false;
