@@ -13,7 +13,7 @@ var exTitle = new Array(5);
 var exStart = new Array(5);
 var exWind = new Array(4);
 var winds = ["North", "East", "South", "West"];
-var exWindStart;
+var exWindStart = 0;
 var exSub = 0;
 var indMahJongg = false;
 
