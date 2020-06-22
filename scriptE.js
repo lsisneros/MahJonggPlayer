@@ -14,10 +14,13 @@ var discard = false;
 var exTitle = new Array(5);
 var exStart = new Array(5);
 var exWind = new Array(4);
+var exFrom = new Array(5);
+var exCount = 0;
 var winds = ["North", "East", "South", "West"];
 var exWindStart = 0;
 var exSub = 0;
 var indMahJongg = false;
+var expose = false;
 
 function discardTileE() {
 	
@@ -40,13 +43,15 @@ function undoTileE() {
 	if(charleston) {
 		undoCharleston();
 	}
-	else if(call) {
-		undoCall();
+	else if(expose) {
+		undoExpose();
 	}
-	else {
-
-		undoA();
-	}
+		else if(call) {
+			undoCall();
+		}
+		else {
+			undoA();
+		}
 }
 
 function undoA() {
@@ -70,6 +75,32 @@ function undoA() {
 	document.getElementById("imgDiscard").title = "Blank";
 	window.opener.discardCount -= 1;
 	
+}
+
+function undoExpose()  {
+	
+	if (exCount == 0) {
+		if(confirm("Undo Call?")){
+			undoCall();
+		}
+		expose = false;
+		return;
+	}
+	
+	var x = exSub - 1;
+	var exID = "imgRE"
+	var f, t, v, y, z;
+	z = exCount + exStart[x] -1;
+	y = exID + z;
+	exCount -= 1;
+	v = document.getElementById(y).src;
+	t = document.getElementById(y).title;
+	f = exFrom[exCount];
+	document.getElementById(f).src = v;
+	document.getElementById(f).title = t;
+	document.getElementById(y).src = "Tiles/Blank.jpg";
+	document.getElementById(y).title = "Blank";
+	exNum -= 1;
 }
 
 function callTileE() {
@@ -111,6 +142,7 @@ function resetCallButtons() {
 //	enableDiscard();
 	enableExchange();
 	document.getElementById("Call").removeAttribute("hidden");
+	document.getElementById("Continue").setAttribute("hidden", true);
 	call = false;
 }
 
@@ -128,12 +160,14 @@ function undoCall() {
 	document.getElementById("imgDiscard").title = t;
 	document.getElementById("imgE15").src = "Tiles/Blank.jpg";
 	document.getElementById("imgE15").title = "Blank";
+	resetCallButtons();
 	window.opener.undoCall();
 	
 }
 
 function exposeTileE() {
 	
+	expose = true;
 	suspendDblClick = false;
    	document.getElementById("eastExpose").removeAttribute("hidden");
    	window.opener.expose("e");
@@ -422,6 +456,8 @@ function moveExTile(id) {
         	var x = document.getElementById(id).src;
         	var t = document.getElementById(id).title;			
         	if (checkTitle(t)){
+				exFrom[exCount] = id;
+				exCount += 1;
         		document.getElementById(exid).src = x;
         		document.getElementById(exid).title = t;
         		window.opener.document.getElementById(exid).src = x;
@@ -452,6 +488,9 @@ function checkTitle(t) {
 }
 
 function continuePlay(){
+	
+	expose = false;
+	exCount = 0;
 	var xw = exWindStart;
 	var wid;
 	if (exWindStart != 0) {
