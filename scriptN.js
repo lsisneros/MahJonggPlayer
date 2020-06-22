@@ -486,7 +486,7 @@ function continuePlay(){
 	var wid;
 	if (exWindStart != 0) {
 		for ( i = 0; i < 4; i++) {
-			wid = "imgRW" + xw;
+			wid = "imgRN" + xw;
 			exWind[i] = document.getElementById(wid).title;
 			xw += 1;
 		}
