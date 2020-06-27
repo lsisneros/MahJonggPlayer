@@ -145,7 +145,7 @@ function resetCallButtons() {
 
 function undoCall() {
 	
-	var x,y,y,u;
+	var x,y;
 	
 	if (document.getElementById("imgN14").title == "Blank") {
 		undoA();
@@ -367,6 +367,7 @@ function pass() {
 		n = 3;
 	}
 	var p = window.opener.getWindowId("North");
+	var t = passTo[chSub];
 	passTiles(p, t, n);
 	
 }
@@ -381,7 +382,6 @@ function alertCallOpt(t, n) {
 function alertOpt(f, n){
 	
 	alert(f + " selected " + n + " optional pass.  Your oprion must match.");
-
 }
 
 function get() {
@@ -429,7 +429,6 @@ function moveExTile(id){
 		}
     }
 
-
     else if(exchange){      // After click onexchange button - 
                             // double-click on tile to be exchanged
         if(exMatch(id)){
@@ -441,8 +440,7 @@ function moveExTile(id){
             exchange = false;
 		
         }   
-    else {				//Expose
-		
+    else {				//Expose		
         var exid = "imgRN" + exNum;  
         var x = document.getElementById(id).src;
         var t = document.getElementById(id).title;
@@ -512,8 +510,7 @@ function exMatch(id){   // Get title of tile being exchanged
     var h = document.getElementById("hand").value;
  //   window.opener.document.exTile("east", h, id);
     document.getElementById("exSelect").setAttribute("hidden", true);  // hide dropdown
-    xid = window.opener.getWindowId(h); // window with exposed hand
-    
+    xid = window.opener.getWindowId(h); // window with exposed hand   
     if (!xid.matchTitle(t)) {
     	alert("No match for:  " + t);
 		}

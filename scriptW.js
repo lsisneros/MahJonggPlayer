@@ -56,10 +56,10 @@ function undoA() {
 	var x,y,y,u;
 	
 y = document.getElementById("imgDiscard").src;	
-	u = document.getElementById("imgDiscard").title;
-	if (discard) {
-		document.getElementById("imgW14").src = y;
-		document.getElementById("imgW14").title = u;	
+u = document.getElementById("imgDiscard").title;
+if (discard) {
+	document.getElementById("imgW14").src = y;
+	document.getElementById("imgW14").title = u;	
 	} else {
 		x = document.getElementById(lastID).src;
 		t = document.getElementById(lastID).title;
@@ -145,7 +145,7 @@ function resetCallButtons() {
 
 function undoCall() {
 	
-	var x,y,y,u;
+	var x,y;
 	
 	if (document.getElementById("imgW14").title == "Blank") {
 		undoA();
@@ -430,7 +430,7 @@ function moveExTile(id){
     }
 
     else if(exchange){      // After click onexchange button - 
-                            // double-click on tile to be exchanged
+                            // click on tile to be exchanged
         if(exMatch(id)){
             
             document.getElementById(id).src = "Tiles/Joker.jpg";
@@ -475,7 +475,6 @@ function checkTitle(t) {
 	return check;
 	
 }
-
 
 function continuePlay(){
 	
