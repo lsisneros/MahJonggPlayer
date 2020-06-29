@@ -103,6 +103,7 @@ function undoExpose()  {
 function callTileS(){
      
     call = true;
+	discard = false;
 	document.getElementById("Expose").removeAttribute("hidden");
 	var x = document.getElementById("imgDiscard").src;
 	var y = document.getElementById("imgDiscard").title;
@@ -441,7 +442,10 @@ function moveExTile(id){
         
         } 
     else {
-        
+		if ((exNum == 14)&&(!indMahJongg)) {
+			alert("Expose must come from rack.");
+			return;
+		}        
         var exid = "imgRS" + exNum;  
         var x = document.getElementById(id).src;
         var t = document.getElementById(id).title;
