@@ -527,22 +527,26 @@ function exMatch(id){   // Get title of tile being exchanged
 }
 
 function matchTitle(t) {
-	
-	var r = false;
-	for(i = 0; i < exSub; i++){
-        if (t == exTitle[i]){
-			swap(t, exStart[i]);   // in window with exposed hand 
-        	r = true;
-           	break;
-        } else {
-			if ((winds.includes(t)) && (!(exWind.includes(t))))
-				swap(t, exStart[i]);   // in window with exposed hand 
-        		r = true;
-           		break;
-		}
-	}
-	return r;
 		
+		for(i = 0; i < exSub; i++){
+        	if (t == exTitle[i]){
+				swap(t, exStart[i]);   // in window with exposed hand 
+        		return true;
+           		break;		
+			}
+		return matchWind(t);
+		}
+		
+}
+	
+function matchWind(t){
+
+	if ((winds.includes(t)) && (!(exWind.includes(t)))){
+				swap(t, exStart[i]);   // in window with exposed hand 
+        		return true;        		
+			} else {
+				return false;
+				}
 }
 
 function notes(){
