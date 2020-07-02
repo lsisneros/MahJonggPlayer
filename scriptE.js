@@ -372,10 +372,9 @@ function pass() {
 	else {
 		n = 3;
 	}
-	var p = window.opener.getWindowId("East");
-	
+	var p = window.opener.getWindowId("East");	
 	passTiles(p, t, n);
-	
+	document.getElementById("UnDo").disabled= true;
 }
 
 function alertCallOpt(t, n){
@@ -426,6 +425,7 @@ function moveExTile(id) {
 		}
     
     if (charleston) {
+		document.getElementById("UnDo").disabled=false;
 		var t = document.getElementById(id).title;
 		if (t == "Joker"){
 			alert("Invalid pass!");
