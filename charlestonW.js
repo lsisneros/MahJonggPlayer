@@ -278,6 +278,7 @@ function endCharleston() {
     document.getElementById("newtilebox").removeAttribute("hidden");
     document.getElementById("discardtilebox").removeAttribute("hidden");
     document.getElementById("Notes Button").removeAttribute("hidden");
+	document.getElementById("UnDo").disabled= false;
     setPlayer("East");
        
 }
