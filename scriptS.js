@@ -271,8 +271,7 @@ function dropTile(id) {
     d = d.split("Tiles/");
     var n = d[1];
     var t = n.split(".");
-
-    document.getElementById("imgDiscard").title = t[0];
+    document.getElementById("imgDiscard").title = getTitle(t[0]);
     document.getElementById(id).src = document.getElementById("imgS14").src;
     var x = document.getElementById("imgS14").title;
     document.getElementById(id).title = x;
