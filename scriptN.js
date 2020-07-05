@@ -533,8 +533,9 @@ function matchTitle(t) {
         		return true;
            		break;		
 			}
-		return matchWind(t);
 		}
+		return matchWind(t);
+		
 		
 }
 	
